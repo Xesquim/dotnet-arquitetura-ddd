@@ -24,7 +24,7 @@ namespace Api.Data.Context
                     UserName = "admin",
                     CreateAt = DateTime.Now,
                     UpdateAt = DateTime.Now,
-                    Password = "password"
+                    Password = BCrypt.Net.BCrypt.HashPassword("password")
                 }
             );
         }

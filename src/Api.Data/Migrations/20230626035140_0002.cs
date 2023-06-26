@@ -10,7 +10,7 @@ namespace Data.Migrations
             migrationBuilder.InsertData(
                 table: "user",
                 columns: new[] { "id", "create_at", "email", "password", "update_at", "user_name" },
-                values: new object[] { new Guid("ce83f349-7e85-477c-8c12-6dddd58704ea"), new DateTime(2023, 6, 26, 0, 23, 48, 986, DateTimeKind.Local).AddTicks(9262), "admin@test.com", "password", new DateTime(2023, 6, 26, 0, 23, 48, 987, DateTimeKind.Local).AddTicks(8333), "admin" });
+                values: new object[] { new Guid("cf93d96c-dc91-4e33-9c34-63a8349d1def"), new DateTime(2023, 6, 26, 0, 51, 39, 966, DateTimeKind.Local).AddTicks(2008), "admin@test.com", "$2a$11$Fi.g6aTNlZyh.6.n05PDM.Jj62cmm10ANhPe.3I9r/r.kM8HqNzKS", new DateTime(2023, 6, 26, 0, 51, 39, 967, DateTimeKind.Local).AddTicks(2621), "admin" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -18,7 +18,7 @@ namespace Data.Migrations
             migrationBuilder.DeleteData(
                 table: "user",
                 keyColumn: "id",
-                keyValue: new Guid("ce83f349-7e85-477c-8c12-6dddd58704ea"));
+                keyValue: new Guid("cf93d96c-dc91-4e33-9c34-63a8349d1def"));
         }
     }
 }

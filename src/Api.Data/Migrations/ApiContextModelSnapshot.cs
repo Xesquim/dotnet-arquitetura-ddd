@@ -69,11 +69,11 @@ namespace Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ce83f349-7e85-477c-8c12-6dddd58704ea"),
-                            CreateAt = new DateTime(2023, 6, 26, 0, 23, 48, 986, DateTimeKind.Local).AddTicks(9262),
+                            Id = new Guid("cf93d96c-dc91-4e33-9c34-63a8349d1def"),
+                            CreateAt = new DateTime(2023, 6, 26, 0, 51, 39, 966, DateTimeKind.Local).AddTicks(2008),
                             Email = "admin@test.com",
-                            Password = "password",
-                            UpdateAt = new DateTime(2023, 6, 26, 0, 23, 48, 987, DateTimeKind.Local).AddTicks(8333),
+                            Password = "$2a$11$Fi.g6aTNlZyh.6.n05PDM.Jj62cmm10ANhPe.3I9r/r.kM8HqNzKS",
+                            UpdateAt = new DateTime(2023, 6, 26, 0, 51, 39, 967, DateTimeKind.Local).AddTicks(2621),
                             UserName = "admin"
                         });
                 });
