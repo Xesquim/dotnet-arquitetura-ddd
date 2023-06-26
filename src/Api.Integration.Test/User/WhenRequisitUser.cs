@@ -53,6 +53,16 @@ namespace Api.Integration.Test.User
             Assert.True(listFromJson.Count() > 0);
             Assert.True(listFromJson.Where(user => user.Id == postRegister.Id).Count() == 1);
 
+            //Get By Id Section
+            response = await client.GetAsync($"{hostApi}v1/users/{postRegister.Id}");
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            jsonResult = await response.Content.ReadAsStringAsync();
+            var selectedRegister = JsonConvert.DeserializeObject<UserDto>(jsonResult);
+            Assert.NotNull(selectedRegister);
+            Assert.Equal(selectedRegister.UserName, postRegister.UserName);
+            Assert.Equal(selectedRegister.Email, postRegister.Email);
+
+
             //Put Section
             var updateUserDto = new UserDtoUpdate()
             {
