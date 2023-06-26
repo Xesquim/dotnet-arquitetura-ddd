@@ -62,7 +62,6 @@ namespace Api.Integration.Test.User
             Assert.Equal(selectedRegister.UserName, postRegister.UserName);
             Assert.Equal(selectedRegister.Email, postRegister.Email);
 
-
             //Put Section
             var updateUserDto = new UserDtoUpdate()
             {
@@ -79,6 +78,14 @@ namespace Api.Integration.Test.User
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotEqual(postRegister.UserName, updateRegister.UserName);
             Assert.NotEqual(postRegister.Email, updateRegister.Email);
+
+            //Delete Section
+            response = await client.DeleteAsync($"{hostApi}v1/users/{selectedRegister.Id}");
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+            //Get Id After Delete
+            response = await client.GetAsync($"{hostApi}v1/users/{postRegister.Id}");
+            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
     }
 }
