@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Api.Domain.Dtos.User;
@@ -18,6 +20,7 @@ namespace Api.Integration.Test.User
         [Fact]
         public async Task Is_Possible_Realize_User_Crud()
         {
+            await AddToken();
             var faker = new Faker();
             _name = faker.Name.FirstName();
             _email = faker.Internet.Email();
@@ -30,6 +33,7 @@ namespace Api.Integration.Test.User
                 Password = _password
             };
 
+            //Post Section
             var response = await PostJsonAsync(userDto, $"{hostApi}v1/users", client);
             var postResult = await response.Content.ReadAsStringAsync();
             var postRegister = JsonConvert.DeserializeObject<UserDtoCreateResult>(postResult);
@@ -37,6 +41,15 @@ namespace Api.Integration.Test.User
             Assert.Equal(_name, postRegister.UserName);
             Assert.Equal(_email, postRegister.Email);
             Assert.False(postRegister.Id == default(Guid));
+
+            //Get All Section
+            response = await client.GetAsync($"{hostApi}v1/users");
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            var jsonResult = await response.Content.ReadAsStringAsync();
+            var listFromJson = JsonConvert.DeserializeObject<IEnumerable<UserDto>>(jsonResult);
+            Assert.NotNull(listFromJson);
+            Assert.True(listFromJson.Count() > 0);
+            Assert.True(listFromJson.Where(user => user.Id == postRegister.Id).Count() == 1);
         }
     }
 }
