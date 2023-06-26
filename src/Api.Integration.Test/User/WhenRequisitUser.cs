@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Api.Domain.Dtos.User;
 using Bogus;
@@ -50,6 +52,23 @@ namespace Api.Integration.Test.User
             Assert.NotNull(listFromJson);
             Assert.True(listFromJson.Count() > 0);
             Assert.True(listFromJson.Where(user => user.Id == postRegister.Id).Count() == 1);
+
+            //Put Section
+            var updateUserDto = new UserDtoUpdate()
+            {
+                Id = postRegister.Id,
+                UserName = faker.Name.FirstName(),
+                Email = faker.Internet.Email(),
+                Password = faker.Internet.Password()
+            };
+            var stringContent = new StringContent(JsonConvert.SerializeObject(updateUserDto),
+                                    Encoding.UTF8, "application/json");
+            response = await client.PutAsync($"{hostApi}v1/users", stringContent);
+            jsonResult = await response.Content.ReadAsStringAsync();
+            var updateRegister = JsonConvert.DeserializeObject<UserDtoUpdateResult>(jsonResult);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.NotEqual(postRegister.UserName, updateRegister.UserName);
+            Assert.NotEqual(postRegister.Email, updateRegister.Email);
         }
     }
 }
