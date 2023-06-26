@@ -1,1 +1,1 @@
-# curso-dotnet-arquitetura-ddd
+# dotnet ddd
