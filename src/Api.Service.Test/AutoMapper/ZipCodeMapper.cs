@@ -107,7 +107,7 @@ namespace Api.Service.Test.AutoMapper
             Assert.Equal(zipCodeModel.Id, zipCodeDto.Id);
             Assert.Equal(zipCodeModel.ZipCode, zipCodeDto.ZipCode);
             Assert.Equal(zipCodeModel.Street, zipCodeDto.Street);
-            Assert.Equal(zipCodeModel.Number, "S/N");
+            Assert.Equal("S/N", zipCodeModel.Number);
             
             var zipCodeDtoCreate = Mapper.Map<ZipCodeDtoCreate>(zipCodeModel);
             Assert.Equal(zipCodeModel.ZipCode, zipCodeDtoCreate.ZipCode);
