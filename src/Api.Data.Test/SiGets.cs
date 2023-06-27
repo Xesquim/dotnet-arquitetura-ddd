@@ -19,7 +19,7 @@ namespace Api.Data.Test
 
         [Fact(DisplayName = "Gets SI")]
         [Trait("GETs", "SiEntity")]
-        public async Task Is_Possible_Gets_Si()
+        public async Task Is_Possible_Do_Gets_Si()
         {
             using (var context = _serviceProvider.GetService<ApiContext>())
             {
