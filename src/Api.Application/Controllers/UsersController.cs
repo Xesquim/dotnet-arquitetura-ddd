@@ -23,9 +23,7 @@ namespace Api.Application.Controllers
         public async Task<ActionResult> GetAll()
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
             try
             {
@@ -42,17 +40,14 @@ namespace Api.Application.Controllers
         public async Task<ActionResult> Get(Guid id)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
             try
             {
                 var result = await _service.Get(id);
                 if(result == null)
-                {
                     return NotFound();
-                }
+
                 return Ok(result);
             }
             catch (ArgumentException e)
@@ -66,21 +61,15 @@ namespace Api.Application.Controllers
         public async Task<ActionResult> Post([FromBody] UserDtoCreate user)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
             try
             {
                 var result = await _service.Post(user);
-                if (result != null)
-                {
-                    return Created(new Uri(Url.Link("GetWithId", new { id = result.Id })), result);
-                }
-                else
-                {
+                if(result == null)
                     return BadRequest();
-                }
+
+                return Created(new Uri(Url.Link("GetWithId", new { id = result.Id })), result);
             }
             catch (ArgumentException e)
             {
@@ -93,21 +82,15 @@ namespace Api.Application.Controllers
         public async Task<ActionResult> Put([FromBody] UserDtoUpdate user)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
             try
             {
                 var result = await _service.Put(user);
-                if (result != null)
-                {
-                    return Ok(result);
-                }
-                else
-                {
+                if(result == null)
                     return BadRequest();
-                }
+
+                return Ok(result);
             }
             catch (ArgumentException e)
             {
@@ -120,9 +103,7 @@ namespace Api.Application.Controllers
         public async Task<ActionResult> Delete(Guid id)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
             try
             {

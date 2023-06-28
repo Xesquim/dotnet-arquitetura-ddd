@@ -23,13 +23,10 @@ namespace Api.Application.Controllers
         public async Task<object> Login([FromBody] LoginDto loginDto)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
+
             if (loginDto == null)
-            {
                 return BadRequest();
-            }
 
             try
             {
