@@ -1,8 +1,8 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using Api.Domain.Dtos.User;
-using Api.Domain.Interfaces.Services.User;
+using Api.Domain.Dtos.City;
+using Api.Domain.Interfaces.Services.City;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +10,10 @@ namespace Api.Application.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class CitiesController : ControllerBase
     {
-        private IUserService _service;
-        public UsersController(IUserService service)
+        public ICityService _service { get; set; }
+        public CitiesController(ICityService service)
         {
             _service = service;
         }
@@ -22,7 +22,7 @@ namespace Api.Application.Controllers
         [HttpGet]
         public async Task<ActionResult> GetAll()
         {
-            if (!ModelState.IsValid)
+            if(!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
@@ -36,19 +36,16 @@ namespace Api.Application.Controllers
         }
 
         [Authorize("Bearer")]
-        [HttpGet("{id}", Name = "GetWithId")]
+        [HttpGet]
+        [Route("{id}", Name = "GetCityWithId")]
         public async Task<ActionResult> Get(Guid id)
         {
-            if (!ModelState.IsValid)
+            if(!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                var result = await _service.Get(id);
-                if(result == null)
-                    return NotFound();
-
-                return Ok(result);
+                return Ok(await _service.Get(id));
             }
             catch (ArgumentException e)
             {
@@ -56,20 +53,56 @@ namespace Api.Application.Controllers
             }
         }
 
-        [AllowAnonymous]
-        [HttpPost]
-        public async Task<ActionResult> Post([FromBody] UserDtoCreate user)
+        [Authorize("Bearer")]
+        [HttpGet]
+        [Route("complete/{idCity}")]
+        public async Task<ActionResult> GetCompleteById(Guid idCity)
         {
-            if (!ModelState.IsValid)
+            if(!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                var result = await _service.Post(user);
+                return Ok(await _service.GetCompleteById(idCity));
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+
+        [Authorize("Bearer")]
+        [HttpGet]
+        [Route("ibge/{ibgeCode}")]
+        public async Task<ActionResult> GetCompleteByIbge(int ibgeCode)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                return Ok(await _service.GetCompleteByIbge(ibgeCode));
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+
+        [Authorize("Bearer")]
+        [HttpPost]
+        public async Task<ActionResult> Post([FromBody] CityDtoCreate cityDtoCreate)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var result = await _service.Post(cityDtoCreate);
                 if(result == null)
                     return BadRequest();
-
-                return Created(new Uri(Url.Link("GetWithId", new { id = result.Id })), result);
+                
+                return Created(new Uri(Url.Link("GetCityWithId", new { id = result.Id })), result);
             }
             catch (ArgumentException e)
             {
@@ -79,35 +112,18 @@ namespace Api.Application.Controllers
 
         [Authorize("Bearer")]
         [HttpPut]
-        public async Task<ActionResult> Put([FromBody] UserDtoUpdate user)
+        public async Task<ActionResult> Put([FromBody] CityDtoUpdate cityDtoUpdate)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            if(!ModelState.IsValid)
+                return BadRequest();
 
             try
             {
-                var result = await _service.Put(user);
+                var result = await _service.Put(cityDtoUpdate);
                 if(result == null)
                     return BadRequest();
-
+                
                 return Ok(result);
-            }
-            catch (ArgumentException e)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
-        
-        [Authorize("Bearer")]
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(Guid id)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            try
-            {
-                return Ok(await _service.Delete(id));
             }
             catch (ArgumentException e)
             {
