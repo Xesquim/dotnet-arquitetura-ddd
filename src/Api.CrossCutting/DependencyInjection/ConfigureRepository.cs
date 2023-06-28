@@ -15,6 +15,10 @@ namespace Api.CrossCutting.DependencyInjection
         {
             serviceCollection.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
             serviceCollection.AddScoped<IUserRepository, UserImplementation>();
+            serviceCollection.AddScoped<ISiRepository, SiImplementation>();
+            serviceCollection.AddScoped<ICityRepository, CityImplementation>();
+            serviceCollection.AddScoped<IZipCodeRepository, ZipCodeImplementation>();
+
             serviceCollection.AddDbContext<ApiContext>(
                 options => options.UseSqlServer(Environment.GetEnvironmentVariable("DB_CONNECTION")).UseSnakeCaseNamingConvention()
             );
