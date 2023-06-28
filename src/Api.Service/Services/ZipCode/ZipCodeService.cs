@@ -36,7 +36,7 @@ namespace Api.Service.Services.ZipCode
         {
             var model = _mapper.Map<ZipCodeModel>(zipCode);
             var entity = _mapper.Map<ZipCodeEntity>(model);
-            var result = _repository.InsertAsync(entity);
+            var result = await _repository.InsertAsync(entity);
 
             return _mapper.Map<ZipCodeDtoCreateResult>(result);
         }
@@ -45,7 +45,7 @@ namespace Api.Service.Services.ZipCode
         {
             var model = _mapper.Map<ZipCodeModel>(zipCode);
             var entity = _mapper.Map<ZipCodeEntity>(model);
-            var result = _repository.UpdateAsync(entity);
+            var result = await _repository.UpdateAsync(entity);
 
             return _mapper.Map<ZipCodeDtoUpdateResult>(result);
         }
