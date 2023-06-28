@@ -45,7 +45,11 @@ namespace Api.Application.Controllers
 
             try
             {
-                return Ok(await _service.Get(id));
+                var result = await _service.Get(id);
+                if(result == null)
+                    return NotFound();
+
+                return Ok(result);
             }
             catch (ArgumentException e)
             {
@@ -63,7 +67,11 @@ namespace Api.Application.Controllers
 
             try
             {
-                return Ok(await _service.GetCompleteById(idCity));
+                var result = await _service.GetCompleteById(idCity);
+                if(result == null)
+                    return NotFound();
+
+                return Ok(result);
             }
             catch (ArgumentException e)
             {
@@ -81,7 +89,11 @@ namespace Api.Application.Controllers
 
             try
             {
-                return Ok(await _service.GetCompleteByIbge(ibgeCode));
+                var result = await _service.GetCompleteByIbge(ibgeCode);
+                if(result == null)
+                    return NotFound();
+                    
+                return Ok(result);
             }
             catch (ArgumentException e)
             {

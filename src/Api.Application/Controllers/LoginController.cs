@@ -31,14 +31,10 @@ namespace Api.Application.Controllers
             try
             {
                 var result = await _service.Login(loginDto);
-                if (result != null)
-                {
-                    return Ok(result);
-                }
-                else
-                {
+                if(result == null)
                     return NotFound();
-                }
+                
+                return Ok(result);
 
             }
             catch (ArgumentException e)
