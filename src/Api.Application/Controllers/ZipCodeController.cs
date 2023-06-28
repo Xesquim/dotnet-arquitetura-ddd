@@ -25,7 +25,7 @@ namespace Api.Application.Controllers
         public async Task<ActionResult> Get(Guid id)
         {
             if(!ModelState.IsValid)
-                return BadRequest();
+                return BadRequest(ModelState);
 
             try
             {
@@ -47,7 +47,7 @@ namespace Api.Application.Controllers
         public async Task<ActionResult> Get(string zipCode)
         {
             if(!ModelState.IsValid)
-                return BadRequest();
+                return BadRequest(ModelState);
 
             try
             {
@@ -68,7 +68,7 @@ namespace Api.Application.Controllers
         public async Task<ActionResult> Post([FromBody] ZipCodeDtoCreate zipCodeDtoCreate)
         {
             if(!ModelState.IsValid)
-                return BadRequest();
+                return BadRequest(ModelState);
             
             try
             {
@@ -89,7 +89,7 @@ namespace Api.Application.Controllers
         public async Task<ActionResult> Put([FromBody] ZipCodeDtoUpdate zipCodeDtoUpdate)
         {
             if(!ModelState.IsValid)
-                return BadRequest();
+                return BadRequest(ModelState);
 
             try
             {

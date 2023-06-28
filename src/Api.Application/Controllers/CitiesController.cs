@@ -127,7 +127,7 @@ namespace Api.Application.Controllers
         public async Task<ActionResult> Put([FromBody] CityDtoUpdate cityDtoUpdate)
         {
             if(!ModelState.IsValid)
-                return BadRequest();
+                return BadRequest(ModelState);
 
             try
             {
