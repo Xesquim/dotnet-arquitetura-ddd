@@ -83,7 +83,7 @@ namespace application
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "Curso Dotnet Arquitetura DDD",
+                    Title = "Dotnet Arquitetura DDD",
                     Description = "Arquitetura DDD",
                     Contact = new OpenApiContact
                     {
@@ -128,7 +128,7 @@ namespace application
 
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Curso Dotnet Arquitetura DDD");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Dotnet Arquitetura DDD");
                 c.RoutePrefix = string.Empty;
             });
 
