@@ -11,7 +11,7 @@ namespace Api.Integration.Test.Si
     public class WhenRequestSi : BaseIntegration
     {
         [Fact]
-        public async Task Is_Possible_Realize_Crud_Si()
+        public async Task Is_Possible_Realize_Get_Si()
         {
             await AddToken();
 
